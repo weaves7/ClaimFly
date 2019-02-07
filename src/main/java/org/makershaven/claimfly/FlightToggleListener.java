@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerToggleFlightEvent;
 public class FlightToggleListener implements Listener {        //This class is updated take two, seems good so far.
 
 
-    //private Claims claims;
     private ClaimFly plugin;
     private FlightCheck fCheck;
 
@@ -18,7 +17,6 @@ public class FlightToggleListener implements Listener {        //This class is u
     FlightToggleListener(ClaimFly plugin) {
 
         this.plugin = plugin;
-        //this.claims = plugin.claims;
         this.fCheck = new FlightCheck(plugin);
     }
 
@@ -27,18 +25,19 @@ public class FlightToggleListener implements Listener {        //This class is u
         Player player = event.getPlayer();
         String checkResult;
 
-        if(plugin.config.getBoolean("debug")) {
-            long sTime = System.nanoTime();
-            checkResult = fCheck.check(player);
-            plugin.getLogger().info("FlightToggle check took " + (System.nanoTime() - sTime)+"ns");
-
-        }
-        else{
-            checkResult = fCheck.check(player);
-        }
-
         if (event.isFlying()) {
-            if (!checkResult.equals("allow")) {
+            if (plugin.config.getBoolean("debug")) {
+                long sTime = System.nanoTime();
+                checkResult = fCheck.check(player);
+                plugin.getLogger().info("FlightToggle check took " + (System.nanoTime() - sTime) + "ns");
+
+            }
+            else {
+                checkResult = fCheck.check(player);
+            }
+
+
+            if (!checkResult.equals(fCheck.getFLIGHT_ALLOWED())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
             }
@@ -47,39 +46,3 @@ public class FlightToggleListener implements Listener {        //This class is u
     }
 }
 
-
-/*        if (event.isFlying()) {
-            if (player.hasPermission("claimfly.use")) {
-                if (claims.isInClaim(player)) {
-                    if (claims.isClaimOwner (player) || claims.hasAccessTrust (player) || player.hasPermission ("claimfly.claims.others")) {
-                        return;
-                    }                               //Maybe change these to !checks and do the else statements?
-                    if (claims.isInAdminClaim (player) && player.hasPermission ("claimfly.claims.admin")) {
-                        return;
-                    }
-                    else {
-                        event.setCancelled (true);
-                        event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.cannot-fly-this-claim")));
-                        event.getPlayer().sendMessage(ChatColor.RED + "Ask, " + claims.getClaim(player).getOwnerName() + " for /accesstrust");
-                    }
-                }
-                else if (!claims.isInClaim(player)) {
-
-                    if (!player.hasPermission("claimfly.claims.unclaimed")) {
-                        event.setCancelled(true);
-                        event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.cannot-fly-outside-claims")));
-                    }
-
-                }
-            }
-            else {
-                event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.cannot-fly-on-server")));
-            }
-        }
-
-
-    }
-
-
-}*/

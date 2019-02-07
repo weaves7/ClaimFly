@@ -2,10 +2,11 @@ package org.makershaven.claimfly;
 
 import org.bukkit.entity.Player;
 
-class FlightCheck {    //This seems pretty good, needs more testing.
+class FlightCheck {
 
     private Claims claims = new Claims();
     private ClaimFly plugin;
+    private final String FLIGHT_ALLOWED = "allow";
     private String noFlyOnServer;
     private String noFlyThisClaim;
     private String noFlyOutsideClaims;
@@ -23,7 +24,7 @@ class FlightCheck {    //This seems pretty good, needs more testing.
 
         if (claims.isInAdminClaim(player)) {
             if(claims.hasAccessTrust(player)){
-                return "allow";
+                return FLIGHT_ALLOWED;
             }
             else if (!player.hasPermission("claimfly.claims.admin")) {
                 return noFlyThisClaim.replace("%ClaimOwner%",claims.getClaim(player).getOwnerName());
@@ -42,7 +43,7 @@ class FlightCheck {    //This seems pretty good, needs more testing.
                 return noFlyOutsideClaims;
             }
         }
-         return "allow";  //This was to play nicely with the fp loop. Doesn't help though.
+         return FLIGHT_ALLOWED;  //This was to play nicely with the fp loop. Doesn't help though.
     }
 
     private void retrieveMessages() {
@@ -50,6 +51,10 @@ class FlightCheck {    //This seems pretty good, needs more testing.
         noFlyThisClaim = plugin.getConfig().getString("message.cannot-fly-this-claim");
         noFlyOutsideClaims = plugin.getConfig().getString("message.cannot-fly-outside-claims");
 
+    }
+
+   String getFLIGHT_ALLOWED(){
+        return FLIGHT_ALLOWED;
     }
 
 

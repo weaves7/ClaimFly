@@ -6,7 +6,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-public class ClaimFly extends JavaPlugin { //This class is updated, but untested.
+public class ClaimFly extends JavaPlugin {
 
     FlyingPlayers flyingPlayers;
     PluginDescriptionFile pdfFile;
@@ -34,8 +34,8 @@ public class ClaimFly extends JavaPlugin { //This class is updated, but untested
         // register my commands
         getCommand("ClaimFly").setExecutor(new Commands(this));
 
-        // adds all players on the server to be checked, needed for /reload or
-        // for players that join before plugin loads
+        /*Adds all players on the server to be checked, needed for /reload or
+        for players that join before plugin loads*/
         getServer().getOnlinePlayers().forEach(player -> flyingPlayers.putFlyingPlayer(player));
 
     }

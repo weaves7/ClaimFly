@@ -5,7 +5,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.logging.Logger;
 
-public class CheckFlyingPlayersTask extends BukkitRunnable {  //This class is updated, but untested.
+public class CheckFlyingPlayersTask extends BukkitRunnable {
 
 
     private Logger logger;

@@ -4,7 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerJoinListener implements Listener {  //This class is updated, but untested.
+public class PlayerJoinListener implements Listener {
 
     private FlyingPlayers flyingPlayers;
 
@@ -13,7 +13,6 @@ public class PlayerJoinListener implements Listener {  //This class is updated, 
         this.flyingPlayers = plugin.flyingPlayers;
     }
 
-    // THis needs more testing!! And a constructor with the plugin pass?
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (!flyingPlayers.setContains(event.getPlayer())) {

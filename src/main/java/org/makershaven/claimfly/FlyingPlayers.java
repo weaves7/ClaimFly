@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import java.util.HashSet;
 
 
-class FlyingPlayers {                      //This class is updated ish
+class FlyingPlayers {
 
     private HashSet<Player> flyingPlayers = new HashSet<>();
     private FlightCheck fCheck;
@@ -48,9 +48,9 @@ class FlyingPlayers {                      //This class is updated ish
 
             if (player.isFlying()) {
                 checkResult = fCheck.check(player);
-                if (!checkResult.equals("allow")) {
+                if (!checkResult.equals(fCheck.getFLIGHT_ALLOWED())) {
                     player.setFlying(false);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', fCheck.check(player)));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
                 }
 
             }
@@ -58,107 +58,3 @@ class FlyingPlayers {                      //This class is updated ish
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /*
-
-            if (plugin.getConfig().getBoolean("debug")) {
-                logger.info("Player, " + player.getName() + ", checked");
-            }
-
-            if (player.isFlying()) {
-                if (claims.isInClaim(player) && player.hasPermission("claimfly.use")) {
-                    if (claims.isClaimOwner(player) || claims.hasAccessTrust(player) || player.hasPermission("claimfly.claims.others")) {
-                        continue;
-                    }                   //Maybe change these to !checks and do the else statements?
-                    if (claims.isInAdminClaim(player) && player.hasPermission("claimfly.claims.admin")) {
-                        continue;
-                    }
-                    else {
-                        player.setFlying(false);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.cannot-fly-this-claim")));
-                        player.sendMessage(ChatColor.RED + "Ask, " + claims.getClaim(player).getOwnerName() + " for /accesstrust");
-                    }
-                }       //Probably need an else if.
-                else if (!claims.isInClaim(player) && player.hasPermission("claimfly.use")) {
-                    if (!player.hasPermission("claimfly.claims.unclaimed")) {
-                        player.setFlying(false);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.cannot-fly-outside-claims")));
-                    }
-
-                }
-                else {
-                    player.setFlying(false);
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message.cannot-fly-on-server")));
-                }
-            }
-
-        }
-    }
-}*/
-
-
-            /*if (player.isFlying()) {
-                if (claims.isInClaim(player) && pilot.isPlayer(player)) {
-                    if (claims.isClaimOwner(player) || claims.hasAccessTrust(player) || pilot.isAdmin(player)
-                            || pilot.isMod(player) || (pilot.isBuilder(player) && claims.isInAdminClaim(player))) {
-                        return;
-                    } else {
-                        pilot.groundPilot(player);
-                        groundedPilots.add(player);
-                        player.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                plugin.getConfig().getString("message.cannot-fly-this-claim")));
-                        player.getPlayer().sendMessage(
-                                ChatColor.RED + "Ask, " + claims.getClaim(player).getOwnerName() + " for /accesstrust");
-
-                    }
-                } else if (!claims.isInClaim(player) && pilot.isAdmin(player) || pilot.isVIP(player)) {
-                    return;
-
-
-                } else if (!pilot.isPlayer(player)) {
-                    pilot.groundPilot(player);
-                    groundedPilots.add(player);
-                    player.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.getConfig().getString("message.cannot-fly-on-server")));
-
-                } else {
-                    pilot.groundPilot(player);
-                    groundedPilots.add(player);
-                    player.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.getConfig().getString("message.cannot-fly-outside-claims")));
-
-                }
-            }
-
-            if (!player.isFlying()) {
-                groundedPilots.add(player);
-            }
-
-        }
-        if (plugin.getConfig().getBoolean("debug")) {
-            logger.info("Grounding pilots " + groundedPilots.toString());
-        }
-        flyingPlayers.removeAll(groundedPilots);
-        groundedPilots.clear();
-        if (plugin.getConfig().getBoolean("debug")) {
-            logger.info(groundedPilots.toString() + " left to ground");
-        }*/
-
-

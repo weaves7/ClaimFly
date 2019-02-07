@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.logging.Logger;
 
-public class PlayerLeaveListener implements Listener {  //This class is updated, but untested.
+public class PlayerLeaveListener implements Listener {
 
     private ClaimFly plugin;
     private FlyingPlayers flyingPlayers;

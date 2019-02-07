@@ -5,7 +5,7 @@ import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-class Claims {          //This class is updated, but untested.
+class Claims {
 
     Claim getClaim(Player player) {
         Location location = player.getLocation();
@@ -16,8 +16,8 @@ class Claims {          //This class is updated, but untested.
 
     boolean hasAccessTrust(Player player) {
 
-        // this is kinda odd but GP allowAccess returns null when a player has
-        // trust and a string when they do not
+        /*This is kinda odd but GP allowAccess returns null when a player has
+        trust and a string when they do not*/
         String string = getClaim(player).allowAccess(player);
         return string == null;
     }

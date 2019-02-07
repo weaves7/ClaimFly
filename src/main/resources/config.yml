@@ -1,0 +1,31 @@
+# Thank you for using ClaimFly!
+#
+#
+# Time in seconds between player checks.
+check-interval: 5
+
+# Should ClaimFly tell the players and console what the check
+# results are. Only use if you are sure there is a problem, it is very spammy.
+debug: false
+
+
+#Custom messages.
+message:
+
+  #Player does not have the claimfly.use permission therefore they cant fly anywhere
+  cannot-fly-on-server: "&cYou do not have permission to fly on this server!"
+
+  #Player is not in a claim that they own or have permission to fly in
+  cannot-fly-this-claim: "&cYou do not have permission to fly in this claim! Ask &6%ClaimOwner% &c for /accesstrust"
+
+  #Player is outside of any claims and they do not have claimfly.admin or claimfly.vip
+  cannot-fly-outside-claims: "&cYou cannot fly outside of claims!"
+
+  #Player does not have the claimfly.command.fly permission to use the /claimfly command
+  claimfly-cmd-deny: "&cYou do not have permission to turn on flight!"
+
+  #Player has turned flight on with /claimfly
+  flight-toggle-on: "&aFlight enabled"
+
+  #Player has turned flight off with /claimfly
+  flight-toggle-off: "&cFlight disabled"

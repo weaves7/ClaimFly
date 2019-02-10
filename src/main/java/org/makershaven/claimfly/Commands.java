@@ -30,7 +30,7 @@ public class Commands implements CommandExecutor {
                                     plugin.getConfig().set("check-interval", Integer.parseInt(args[1]));
                                     plugin.saveConfig();
                                     plugin.checkFlyingPlayersTask.cancel();
-                                    plugin.startCheckTask(plugin, 20, 20 * plugin.config.getInt("check-interval"));
+                                    plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
                                     sender.sendMessage(ChatColor.GREEN + "CheckInterval set to " + args[1]);
 
                                     break;
@@ -63,7 +63,7 @@ public class Commands implements CommandExecutor {
                         plugin.reloadConfig();
                         plugin.saveConfig();
                         plugin.checkFlyingPlayersTask.cancel();
-                        plugin.startCheckTask(plugin, 20, 20 * plugin.config.getInt("check-interval"));
+                        plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
                         sender.sendMessage(ChatColor.GREEN + "ClaimFly config reloaded!");
                         break;
                     case "version":

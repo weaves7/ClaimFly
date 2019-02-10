@@ -24,7 +24,7 @@ public class ClaimFly extends JavaPlugin {
 
 
         // Start the checking task on the flying players
-        startCheckTask(this, 1, 20* config.getInt("check-interval"));
+        startCheckTask(this, 1, config.getInt("check-interval"));
 
         // register my listeners
         getServer().getPluginManager().registerEvents(new FlightToggleListener(this), this);

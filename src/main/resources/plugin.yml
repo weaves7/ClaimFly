@@ -1,6 +1,6 @@
 main: org.makershaven.claimfly.ClaimFly
 api-version: "1.13"
-version: ${project.version}
+version: "1.2.0"
 name: "ClaimFly"
 author: "Weaves"
 depend: [GriefPrevention, Vault]

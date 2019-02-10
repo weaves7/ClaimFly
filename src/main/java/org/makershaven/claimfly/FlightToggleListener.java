@@ -7,7 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
-public class FlightToggleListener implements Listener {        //This class is updated take two, seems good so far.
+public class FlightToggleListener implements Listener {
 
 
     private ClaimFly plugin;
@@ -19,7 +19,7 @@ public class FlightToggleListener implements Listener {        //This class is u
         this.plugin = plugin;
         this.fCheck = new FlightCheck(plugin);
     }
-
+//TODO prevent spamming space to glide
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onFlightToggle(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();

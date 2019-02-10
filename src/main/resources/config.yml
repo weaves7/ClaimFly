@@ -1,8 +1,11 @@
 # Thank you for using ClaimFly!
 #
 #
-# Time in seconds between player checks.
+# Time in ticks between player checks.
 check-interval: 5
+
+# Distance to show edge of claim.
+show-boundary-distance: 10
 
 # Should ClaimFly tell the players and console what the check
 # results are. Only use if you are sure there is a problem, it is very spammy.
@@ -18,7 +21,7 @@ message:
   #Player is not in a claim that they own or have permission to fly in
   cannot-fly-this-claim: "&cYou do not have permission to fly in this claim! Ask &6%ClaimOwner% &c for /accesstrust"
 
-  #Player is outside of any claims and they do not have claimfly.admin or claimfly.vip
+  #Player is outside of any claims and they do not have claimfly.claims.unclaimed
   cannot-fly-outside-claims: "&cYou cannot fly outside of claims!"
 
   #Player does not have the claimfly.command.fly permission to use the /claimfly command

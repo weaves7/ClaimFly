@@ -8,10 +8,11 @@ import org.bukkit.entity.Player;
 class Claims {
 
     Claim getClaim(Player player) {
-        Location location = player.getLocation();
+        return getClaim(player.getLocation());
+    }
 
+    private Claim getClaim(Location location){
         return GriefPrevention.instance.dataStore.getClaimAt(location, true, null);
-
     }
 
     boolean hasAccessTrust(Player player) {
@@ -22,14 +23,29 @@ class Claims {
         return string == null;
     }
 
+    boolean hasAccessTrust(Player player,Location location){
+        String string = getClaim(location).allowAccess(player);
+        return string ==null;
+    }
+
     boolean isClaimOwner(Player player) {
 
         return player.getName().equals(getClaim(player).getOwnerName());
     }
 
+    boolean isClaimOwner(Player player,Location location){
+
+        return player.getName().equals(getClaim(location).getOwnerName());
+    }
+
     boolean isInClaim(Player player) {
 
         return getClaim(player) != null;
+    }
+
+    boolean isClaimed(Location location){
+
+        return getClaim(location) != null;
     }
 
     boolean isInAdminClaim(Player player) {
@@ -41,6 +57,10 @@ class Claims {
         else
             return false;
 
+    }
+
+    boolean isAnAdminClaim(Location location){
+        return getClaim(location).isAdminClaim();
     }
 
 }

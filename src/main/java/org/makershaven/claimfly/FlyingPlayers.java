@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 class FlyingPlayers {
 
+
     private HashSet<Player> flyingPlayers = new HashSet<>();
     private FlightCheck fCheck;
 

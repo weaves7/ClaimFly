@@ -73,7 +73,7 @@ public class Commands implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Invalid arguments!");
                 }
 
-            } else if (player.hasPermission("claimfly.command")) {
+            } else if (player.hasPermission("claimfly.command")) { //TODO Add Aviator boundary commands for players
 
                 if (!player.getAllowFlight()) {
                     player.setAllowFlight(true);

@@ -4,7 +4,6 @@ import me.ryanhamshire.GriefPrevention.Claim;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 //X East[+] West[-] // Z North[-] South[+]
 class FlightBoundary {
@@ -13,17 +12,20 @@ class FlightBoundary {
     private Claim claimAtPlayer;
     private Claims claims;
     private Location playerLoc;
-    private Plugin plugin;
+    private ClaimFly plugin;
+    //private PlayerTracker playerTracker;
 
-
-
-
-    FlightBoundary(Plugin plugin){
+    FlightBoundary(ClaimFly plugin){
         this.claims = new Claims();
         this.plugin = plugin;
+       // this.playerTracker = plugin.playerTracker;
     }
 
     void showFlightBoundaries(Player player){
+        PlayerTracker playerTracker = plugin.playerTracker;
+        if(!playerTracker.getAviator(player).showBoundaries()){
+            return;
+        }
         int checkDistance = plugin.getConfig().getInt("show-boundary-distance");
         Claim claimAtPlayer = claims.getClaim(player);
         Location playerLoc = player.getLocation();
@@ -38,6 +40,7 @@ class FlightBoundary {
             for(int i =0; i <= 3;i++){
                 if(playerLoc.distance(locs[i]) <= checkDistance){
                     player.spawnParticle(Particle.BARRIER,locs[i],1);
+                    player.spawnParticle(Particle.BARRIER,locs[i].subtract(0,1,0),1);
                 }
             }
 

@@ -14,7 +14,7 @@ class FlightCheck {
     private String noFlyOutsideClaims;
 
 
-    FlightCheck(Plugin plugin) {
+    FlightCheck(ClaimFly plugin) {
         this.plugin = plugin;
         this.flightBoundary = new FlightBoundary(plugin);
         retrieveMessages();

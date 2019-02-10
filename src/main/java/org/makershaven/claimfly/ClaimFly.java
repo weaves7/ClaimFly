@@ -1,6 +1,7 @@
 package org.makershaven.claimfly;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,7 +9,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class ClaimFly extends JavaPlugin {
 
-    FlyingPlayers flyingPlayers;
+    PlayerTracker playerTracker;
     PluginDescriptionFile pdfFile;
     BukkitTask checkFlyingPlayersTask;
     FileConfiguration config;
@@ -18,7 +19,7 @@ public class ClaimFly extends JavaPlugin {
 
         saveDefaultConfig();
 
-        flyingPlayers = new FlyingPlayers(this);
+        playerTracker = new PlayerTracker(this);
         pdfFile = getDescription();
         config = getConfig();
 
@@ -36,10 +37,11 @@ public class ClaimFly extends JavaPlugin {
 
         /*Adds all players on the server to be checked, needed for /reload or
         for players that join before plugin loads*/
-        getServer().getOnlinePlayers().forEach(player -> flyingPlayers.putFlyingPlayer(player));
+        for (Player player : getServer().getOnlinePlayers()) {
+            playerTracker.addFlyingPlayer(player);
+        }
 
     }
-
 
 
     void startCheckTask(Plugin plugin, long delay, long interval) {

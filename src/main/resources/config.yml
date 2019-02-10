@@ -4,7 +4,10 @@
 # Time in ticks between player checks.
 check-interval: 5
 
-# Distance to show edge of claim.
+#Minimum ticks between attempts to fly when not allowed to.
+flight-toggle-cooldown: 10
+
+#Default distance to show edge of claim.
 show-boundary-distance: 10
 
 # Should ClaimFly tell the players and console what the check
@@ -19,7 +22,7 @@ message:
   cannot-fly-on-server: "&cYou do not have permission to fly on this server!"
 
   #Player is not in a claim that they own or have permission to fly in
-  cannot-fly-this-claim: "&cYou do not have permission to fly in this claim! Ask &6%ClaimOwner% &c for /accesstrust"
+  cannot-fly-this-claim: "&cYou do not have permission to fly in this claim! Ask &6%ClaimOwner% &c for /accesstrust."
 
   #Player is outside of any claims and they do not have claimfly.claims.unclaimed
   cannot-fly-outside-claims: "&cYou cannot fly outside of claims!"
@@ -28,7 +31,10 @@ message:
   claimfly-cmd-deny: "&cYou do not have permission to turn on flight!"
 
   #Player has turned flight on with /claimfly
-  flight-toggle-on: "&aFlight enabled"
+  flight-toggle-on: "&aFlight enabled."
 
   #Player has turned flight off with /claimfly
-  flight-toggle-off: "&cFlight disabled"
+  flight-toggle-off: "&cFlight disabled."
+
+  #Shown if player spams space to glide where they cannot fly.
+  dont-spam-space: "&cDo not spam space to glide. Flight disabled."

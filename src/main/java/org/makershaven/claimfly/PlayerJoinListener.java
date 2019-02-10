@@ -1,22 +1,25 @@
 package org.makershaven.claimfly;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    private FlyingPlayers flyingPlayers;
+    private PlayerTracker playerTracker;
 
     PlayerJoinListener(ClaimFly plugin) {
 
-        this.flyingPlayers = plugin.flyingPlayers;
+        this.playerTracker = plugin.playerTracker;
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        if (!flyingPlayers.setContains(event.getPlayer())) {
-            flyingPlayers.putFlyingPlayer(event.getPlayer());
+        Player player = event.getPlayer();
+
+        if (!playerTracker.flyingPlayersContains(player)) {
+            playerTracker.addFlyingPlayer(player);
 
         }
     }

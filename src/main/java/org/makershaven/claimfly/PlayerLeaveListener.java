@@ -10,12 +10,12 @@ import java.util.logging.Logger;
 public class PlayerLeaveListener implements Listener {
 
     private ClaimFly plugin;
-    private FlyingPlayers flyingPlayers;
+    private PlayerTracker playerTracker;
     private Logger logger;
 
     PlayerLeaveListener(ClaimFly plugin) {
         this.plugin = plugin;
-        this.flyingPlayers = plugin.flyingPlayers;
+        this.playerTracker = plugin.playerTracker;
         logger = plugin.getLogger();
     }
 
@@ -23,13 +23,12 @@ public class PlayerLeaveListener implements Listener {
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (flyingPlayers.setContains(player)) {
+        if (playerTracker.flyingPlayersContains(player)) {
 
-            player.setFlying(false);
             if (plugin.getConfig().getBoolean("debug")) {
-                logger.info("Player disconnected leaving " + flyingPlayers.getSetSize() + " players in the set.");
+                logger.info("Player disconnected leaving " + playerTracker.getFlyingPlayersSize() + " players in the set.");
             }
-            flyingPlayers.removeFlyingPlayer(player);
+            playerTracker.removeFlyingPlayer(player);//TODO remove this for persistence?
 
         }
     }

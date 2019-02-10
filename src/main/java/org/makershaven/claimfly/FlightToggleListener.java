@@ -11,15 +11,17 @@ public class FlightToggleListener implements Listener {
 
 
     private ClaimFly plugin;
-    private FlightCheck fCheck;
+    private FlightCheck flightCheck;
+    private PlayerTracker playerTracker;
 
 
     FlightToggleListener(ClaimFly plugin) {
-
         this.plugin = plugin;
-        this.fCheck = new FlightCheck(plugin);
+        this.flightCheck = new FlightCheck(plugin);
+        this.playerTracker = plugin.playerTracker;
+
     }
-//TODO prevent spamming space to glide
+
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onFlightToggle(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
@@ -28,18 +30,30 @@ public class FlightToggleListener implements Listener {
         if (event.isFlying()) {
             if (plugin.config.getBoolean("debug")) {
                 long sTime = System.nanoTime();
-                checkResult = fCheck.check(player);
+                checkResult = flightCheck.check(player);
                 plugin.getLogger().info("FlightToggle check took " + (System.nanoTime() - sTime) + "ns");
 
             }
             else {
-                checkResult = fCheck.check(player);
+                checkResult = flightCheck.check(player);
             }
 
 
-            if (!checkResult.equals(fCheck.getFLIGHT_ALLOWED())) {
+            if (!checkResult.equals(flightCheck.getFLIGHT_ALLOWED())) {
+
+                Aviator aviator = playerTracker.getAviator(event.getPlayer());
+                int toggleCooldown = plugin.getConfig().getInt("flight-toggle-cooldown") * 50;
+
+                if ((System.currentTimeMillis() - aviator.getFlightToggleTimeStamp()) <= toggleCooldown) {
+                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.getConfig().getString("message.dont-spam-space")));
+                    event.getPlayer().setAllowFlight(false);
+                }
+                else {
+                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
+                }
+                aviator.setFlightToggleTimeStamp();
                 event.setCancelled(true);
-                event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', checkResult));
             }
         }
 

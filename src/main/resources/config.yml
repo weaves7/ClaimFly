@@ -7,8 +7,12 @@ check-interval: 5
 #Minimum ticks between attempts to fly when not allowed to.
 flight-toggle-cooldown: 10
 
-#Default distance to show edge of claim.
-show-boundary-distance: 10
+
+boundary:
+  #Default distance to show edge of claim.
+  show-distance: 10
+  #Show boundaries to players by default.
+  show-by-default: true
 
 # Should ClaimFly tell the players and console what the check
 # results are. Only use if you are sure there is a problem, it is very spammy.

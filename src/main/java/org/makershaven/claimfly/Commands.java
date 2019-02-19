@@ -4,9 +4,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-public class Commands implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Commands implements CommandExecutor, TabCompleter {
 
     private ClaimFly plugin;
 
@@ -98,4 +102,30 @@ public class Commands implements CommandExecutor {
         return true;
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
+        if (!(sender instanceof Player)) return null;
+        Player player = (Player) sender;
+        List<String> completions = new ArrayList<>();
+        if(args.length < 1){
+            completions.add("cfly");
+            completions.add("claimfly");
+        }
+
+        if (args.length == 1) {
+            if (player.hasPermission("claimfly.command")) {
+                completions.add("border");
+            }
+
+            if (player.hasPermission("claimfly.commands.admin")) {
+                completions.add("checkinterval");
+                completions.add("debug");
+                completions.add("reload");
+                completions.add("version");
+
+            }
+
+        }
+        return completions;
+    }
 }

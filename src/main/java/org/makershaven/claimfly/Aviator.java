@@ -2,14 +2,17 @@ package org.makershaven.claimfly;
 
 import org.bukkit.plugin.Plugin;
 
-class Aviator {
+import java.io.Serializable;
+
+
+class Aviator implements Serializable {
     private boolean showBoundaries;
     private int boundaryDistance;
     private long flightToggleTimeStamp;
 
-    Aviator(Plugin plugin){//TODO Add field for Player?
-        this.showBoundaries = true;
-        this.boundaryDistance = plugin.getConfig().getInt("show-boundary-distance");
+    Aviator(Plugin plugin){
+        this.showBoundaries = plugin.getConfig().getBoolean("boundary.show-by-default");
+        this.boundaryDistance = plugin.getConfig().getInt("boundary.show-distance");
         this.flightToggleTimeStamp = System.currentTimeMillis();
     }
 

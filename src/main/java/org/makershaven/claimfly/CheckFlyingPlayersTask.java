@@ -39,7 +39,7 @@ public class CheckFlyingPlayersTask extends BukkitRunnable {
     private void checkFlyingPlayers() {
         String checkResult;
 
-        for (Player player : playerTracker.getFlyingPlayersSet()) {
+        for (Player player : playerTracker.getTrackedPlayersSet()) {
             if (player.isFlying()) {
                 checkResult = flightCheck.check(player);
                 if (!checkResult.equals(flightCheck.getFLIGHT_ALLOWED())) {

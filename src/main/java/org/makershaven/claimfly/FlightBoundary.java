@@ -26,7 +26,7 @@ class FlightBoundary {
         if(!playerTracker.getAviator(player).showBoundaries()){
             return;
         }
-        int checkDistance = plugin.getConfig().getInt("show-boundary-distance");
+        int checkDistance = plugin.getConfig().getInt("boundary.show-distance");
         Claim claimAtPlayer = claims.getClaim(player);
         Location playerLoc = player.getLocation();
 

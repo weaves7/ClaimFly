@@ -3,13 +3,12 @@ package org.makershaven.claimfly;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 class PlayerTracker {
-    private Map<Player, Aviator> flyingPlayers = new HashMap<>(); //TODO Going to need to change to UUID, Aviator to make persistent with login/logout?
+    private Map<UUID, Aviator> flyingPlayers = new HashMap<>();
+    private Set<Player> trackedPlayersSet;
     private Plugin plugin;
 
 
@@ -19,12 +18,13 @@ class PlayerTracker {
     }
 
     Aviator getAviator(Player player) {
-        return flyingPlayers.get(player);
+        return flyingPlayers.get(player.getUniqueId());
     }
+
 
     boolean flyingPlayersContains(Player player) {
 
-        return flyingPlayers.containsKey(player);
+        return flyingPlayers.containsKey(player.getUniqueId());
     }
 
     int getFlyingPlayersSize() {
@@ -32,16 +32,20 @@ class PlayerTracker {
         return flyingPlayers.size();
     }
 
-    Set<Player> getFlyingPlayersSet(){
-        return flyingPlayers.keySet();
+    Set<Player> getTrackedPlayersSet(){
+        trackedPlayersSet.clear();
+        for(UUID uuid : flyingPlayers.keySet()){
+            plugin.getServer().getPlayer(uuid);
+        }
+       return  trackedPlayersSet;
     }
 
     void addFlyingPlayer(Player player) {
-        flyingPlayers.put(player, new Aviator(plugin));
+        flyingPlayers.put(player.getUniqueId(), new Aviator(plugin));
     }
 
     void removeFlyingPlayer(Player player) {
-        flyingPlayers.remove(player);
+        flyingPlayers.remove(player.getUniqueId());
     }
 
 

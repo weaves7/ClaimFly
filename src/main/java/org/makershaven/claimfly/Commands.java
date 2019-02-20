@@ -48,20 +48,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                             break;
                         }
 
-                    case "debug":
-                        if (plugin.getConfig().getBoolean("debug")) {
-                            plugin.getConfig().set("debug", false);
-                            plugin.saveConfig();
-                            sender.sendMessage(ChatColor.GREEN + "Debug set to false.");
-                            break;
-                        } else if (!plugin.getConfig().getBoolean("Debug")) {
-                            plugin.getConfig().set("debug", true);
-                            plugin.saveConfig();
-                            sender.sendMessage(ChatColor.GREEN + "Debug set to true.");
-                            break;
-                        }
 
-                        break;
                     case "reload":
 
                         plugin.reloadConfig();
@@ -77,7 +64,9 @@ public class Commands implements CommandExecutor, TabCompleter {
                         sender.sendMessage(ChatColor.RED + "Invalid arguments!");
                 }
 
-            } else if (player.hasPermission("claimfly.command")) { //TODO Add Aviator boundary commands for players
+            }
+
+            else if (player.hasPermission("claimfly.command")) { //TODO Add Aviator boundary commands for players
 
                 if (!player.getAllowFlight()) {
                     player.setAllowFlight(true);
@@ -85,7 +74,8 @@ public class Commands implements CommandExecutor, TabCompleter {
                             plugin.getConfig().getString("message.flight-toggle-on")));
 
 
-                } else  {
+                }
+                else {
                     player.setAllowFlight(false);
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.getConfig().getString("message.flight-toggle-off")));
@@ -107,7 +97,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player)) return null;
         Player player = (Player) sender;
         List<String> completions = new ArrayList<>();
-        if(args.length < 1){
+        if (args.length < 1) {
             completions.add("cfly");
             completions.add("claimfly");
         }
@@ -119,7 +109,6 @@ public class Commands implements CommandExecutor, TabCompleter {
 
             if (player.hasPermission("claimfly.commands.admin")) {
                 completions.add("checkinterval");
-                completions.add("debug");
                 completions.add("reload");
                 completions.add("version");
 

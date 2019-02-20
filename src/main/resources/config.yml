@@ -14,11 +14,6 @@ boundary:
   #Show boundaries to players by default.
   show-by-default: true
 
-# Should ClaimFly tell the players and console what the check
-# results are. Only use if you are sure there is a problem, it is very spammy.
-debug: false
-
-
 #Custom messages.
 message:
 

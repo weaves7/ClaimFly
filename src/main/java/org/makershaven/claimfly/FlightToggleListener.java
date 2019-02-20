@@ -28,16 +28,8 @@ public class FlightToggleListener implements Listener {
         String checkResult;
 
         if (event.isFlying()) {
-            if (plugin.config.getBoolean("debug")) {
-                long sTime = System.nanoTime();
-                checkResult = flightCheck.check(player);
-                plugin.getLogger().info("FlightToggle check took " + (System.nanoTime() - sTime) + "ns");
 
-            }
-            else {
-                checkResult = flightCheck.check(player);
-            }
-
+            checkResult = flightCheck.check(player);
 
             if (!checkResult.equals(flightCheck.getFLIGHT_ALLOWED())) {
 

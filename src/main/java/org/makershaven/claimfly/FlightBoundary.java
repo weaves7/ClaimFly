@@ -13,12 +13,10 @@ class FlightBoundary {
     private Claims claims;
     private Location playerLoc;
     private ClaimFly plugin;
-    //private PlayerTracker playerTracker;
 
     FlightBoundary(ClaimFly plugin){
         this.claims = new Claims();
         this.plugin = plugin;
-       // this.playerTracker = plugin.playerTracker;
     }
 
     void showFlightBoundaries(Player player){

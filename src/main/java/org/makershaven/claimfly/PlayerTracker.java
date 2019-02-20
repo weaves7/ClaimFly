@@ -35,12 +35,22 @@ class PlayerTracker {
     Set<Player> getTrackedPlayersSet(){
         trackedPlayersSet.clear();
         for(UUID uuid : flyingPlayers.keySet()){
-            plugin.getServer().getPlayer(uuid);
+            Player player = plugin.getServer().getPlayer(uuid);
+            if(player.isOnline()) {
+                trackedPlayersSet.add(player);
+            }
         }
        return  trackedPlayersSet;
     }
 
     void addFlyingPlayer(Player player) {
+        /*Aviator aviator;
+        TODO if(storage contains player){
+            aviator = aviator from storage;
+        }
+        else{
+            aviator = new Aviator(plugin);
+        }*/
         flyingPlayers.put(player.getUniqueId(), new Aviator(plugin));
     }
 

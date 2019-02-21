@@ -8,7 +8,7 @@ import java.util.*;
 
 class PlayerTracker {
     private Map<UUID, Aviator> flyingPlayers = new HashMap<>();
-    private Set<Player> trackedPlayersSet;
+    private Set<Player> trackedPlayersSet = new HashSet<>();
     private Plugin plugin;
 
 
@@ -36,7 +36,7 @@ class PlayerTracker {
         trackedPlayersSet.clear();
         for(UUID uuid : flyingPlayers.keySet()){
             Player player = plugin.getServer().getPlayer(uuid);
-            if(player.isOnline()) {
+            if(player != null && player.isOnline()) {
                 trackedPlayersSet.add(player);
             }
         }

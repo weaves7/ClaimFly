@@ -29,7 +29,7 @@ public class ClaimFly extends JavaPlugin {
 
         // register my listeners
         getServer().getPluginManager().registerEvents(new FlightToggleListener(this), this);
-        //DISABLED FOR TESTING getServer().getPluginManager().registerEvents(new PlayerLeaveListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerLeaveListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 
         // register my commands

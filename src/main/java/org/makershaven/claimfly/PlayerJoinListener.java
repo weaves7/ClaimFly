@@ -20,7 +20,12 @@ public class PlayerJoinListener implements Listener {
 
         if (!playerTracker.flyingPlayersContains(player)) {
             playerTracker.addFlyingPlayer(player);
+        }
 
+        if (playerTracker.getAviator(player).isFlightActive()) {
+
+            player.setAllowFlight(true);
+            player.setFlying(true);
         }
     }
 

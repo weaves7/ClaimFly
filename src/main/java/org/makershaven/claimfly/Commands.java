@@ -13,78 +13,129 @@ import java.util.List;
 public class Commands implements CommandExecutor, TabCompleter {
 
     private ClaimFly plugin;
+    private PlayerTracker playerTracker;
 
     Commands(ClaimFly plugin) {
         this.plugin = plugin;
+        this.playerTracker = plugin.playerTracker;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) { //TODO Finalize what I want for perms.
         if (cmd.getName().equalsIgnoreCase("claimfly") && sender instanceof Player) {
 
             Player player = (Player) sender;
-            if (args.length >= 1 && player.hasPermission("claimfly.commands.admin")) {
+            if (args.length >= 1) {
 
                 switch (args[0].toLowerCase()) {
 
                     case "checkinterval":
-                        if (args.length >= 2)
-                            try {
-                                {
-                                    plugin.getConfig().set("check-interval", Integer.parseInt(args[1]));
-                                    plugin.saveConfig();
-                                    plugin.checkFlyingPlayersTask.cancel();
-                                    plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
-                                    sender.sendMessage(ChatColor.GREEN + "CheckInterval set to " + args[1]);
+                        if (player.hasPermission("claimfly.commands.admin")) {
+                            if (args.length >= 2)
+                                try {
+                                    {
+                                        plugin.getConfig().set("check-interval", Integer.parseInt(args[1]));
+                                        plugin.saveConfig();
+                                        plugin.checkFlyingPlayersTask.cancel();
+                                        plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
+                                        player.sendMessage(ChatColor.GREEN + "CheckInterval set to " + args[1]);
 
+                                        break;
+                                    }
+                                } catch (NumberFormatException e) {
+                                    player.sendMessage(ChatColor.RED + "CheckInterval must be a number");
                                     break;
                                 }
-                            } catch (NumberFormatException e) {
-                                sender.sendMessage(ChatColor.RED + "CheckInterval must be a number");
+                            else {
+                                player.sendMessage(ChatColor.RED + "Not enough args");
                                 break;
                             }
+                        }
                         else {
-                            sender.sendMessage(ChatColor.RED + "Not enough args");
+                            player.sendMessage(ChatColor.RED + " You do not have permission to use this command.");
                             break;
                         }
 
 
                     case "reload":
 
-                        plugin.reloadConfig();
-                        plugin.saveConfig();
-                        plugin.checkFlyingPlayersTask.cancel();
-                        plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
-                        sender.sendMessage(ChatColor.GREEN + "ClaimFly config reloaded!");
-                        break;
+                        if (player.hasPermission("claimfly.commands.admin")) {
+                            plugin.reloadConfig();
+                            plugin.saveConfig();
+                            plugin.checkFlyingPlayersTask.cancel();
+                            plugin.startCheckTask(plugin, 20, plugin.config.getInt("check-interval"));
+                            player.sendMessage(ChatColor.GREEN + "ClaimFly config reloaded!");
+                            break;
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + " You do not have permission to use this command.");
+                            break;
+                        }
                     case "version":
-                        sender.sendMessage(ChatColor.GOLD + "ClaimFly version " + plugin.pdfFile.getVersion());
-                        break;
+                        if (player.hasPermission("claimfly.commands.admin")) {
+                            player.sendMessage(ChatColor.GOLD + "ClaimFly version " + plugin.pdfFile.getVersion());
+                            break;
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + " You do not have permission to use this command.");
+                            break;
+                        }
+                    case "boundary": //TODO perhaps put the border stuff in own class as /flyboundary show <bool> and /border set <int>? border,boundary,edge... not sure what to call it.
+                        if(args.length >= 2 && player.hasPermission("claimfly.commands.boundary.set")){
+                            try {
+                                int newDistance = Integer.parseInt(args[1]);
+                                Aviator aviator = playerTracker.getAviator(player);
+                                aviator.setBoundaryDistance(newDistance);
+                                player.sendMessage(ChatColor.GREEN + "Boundary show distance set to " + newDistance+".");
+
+                            } catch (NumberFormatException e) {
+                                player.sendMessage(ChatColor.RED + "Boundary show distance must be a number.");
+
+                            }
+                            break;
+                        }
+                        else if (args.length == 1 &&player.hasPermission("claimfly.commands.boundary.toggle")){
+                            Aviator aviator = playerTracker.getAviator(player);
+                            if(aviator.showBoundaries()){
+                                aviator.setShowBoundaries(false);
+                                player.sendMessage(ChatColor.GREEN + "Boundary will not be shown.");
+                            }
+                            else if(!aviator.showBoundaries()) {
+                                aviator.setShowBoundaries(true);
+                                player.sendMessage(ChatColor.GREEN + "Boundary will be shown.");
+                            }
+                            break;
+                        }
+                        else {
+                            player.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+                            break;
+                        }
+
                     default:
-                        sender.sendMessage(ChatColor.RED + "Invalid arguments!");
+                        player.sendMessage(ChatColor.RED + "Invalid arguments!");
                 }
 
             }
 
-            else if (player.hasPermission("claimfly.command")) { //TODO Add Aviator boundary commands for players
+            else if (player.hasPermission("claimfly.command")) {
 
                 if (!player.getAllowFlight()) {
                     player.setAllowFlight(true);
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.getConfig().getString("message.flight-toggle-on")));
 
 
                 }
                 else {
                     player.setAllowFlight(false);
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.getConfig().getString("message.flight-toggle-off")));
                 }
 
             }
 
             else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.getConfig().getString("message.claimfly-cmd-deny")));
             }
         }
@@ -93,7 +144,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) { //TODO Redo this section
         if (!(sender instanceof Player)) return null;
         Player player = (Player) sender;
         List<String> completions = new ArrayList<>();
@@ -103,8 +154,8 @@ public class Commands implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 1) {
-            if (player.hasPermission("claimfly.command")) {
-                completions.add("border");
+            if (player.hasPermission("claimfly.commands.boundary")) {
+                completions.add("boundary");
             }
 
             if (player.hasPermission("claimfly.commands.admin")) {

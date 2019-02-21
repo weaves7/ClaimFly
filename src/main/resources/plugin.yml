@@ -1,6 +1,6 @@
 main: org.makershaven.claimfly.ClaimFly
 api-version: "1.13"
-version: "1.2.0"
+version: "1.2.1"
 name: "ClaimFly"
 author: "Weaves"
 depend: [GriefPrevention, Vault]
@@ -11,7 +11,7 @@ commands:
     description: ClaimFly main command!
     permission: claimfly.command
     usage: /<command> args
-permissions:
+permissions: #TODO Finish pulling perms from code.
   claimfly.*:
     description: Allows all permissions.
     default: op
@@ -27,6 +27,9 @@ permissions:
     default: false
   claimfly.command:
     description: Allows you to toggle flight with /claimfly
+    default: false
+  claimfly.commands.boundary:
+    description: Allows you to change your boundary properties.
     default: false
   claimfly.claims.others:
     description: Allows you to fly in other peoples claims.

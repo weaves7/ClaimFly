@@ -9,11 +9,13 @@ class Aviator implements Serializable {
     private boolean showBoundaries;
     private int boundaryDistance;
     private long flightToggleTimeStamp;
+    private boolean flightActive;
 
     Aviator(Plugin plugin){
         this.showBoundaries = plugin.getConfig().getBoolean("boundary.show-by-default");
         this.boundaryDistance = plugin.getConfig().getInt("boundary.show-distance");
         this.flightToggleTimeStamp = System.currentTimeMillis();
+        this.flightActive = false;
     }
 
     boolean showBoundaries() {
@@ -38,6 +40,14 @@ class Aviator implements Serializable {
 
     void setFlightToggleTimeStamp() {
         this.flightToggleTimeStamp = System.currentTimeMillis();
+    }
+
+    boolean isFlightActive() {
+        return flightActive;
+    }
+
+    void setFlightActive(boolean flightActive){
+        this.flightActive = flightActive;
     }
 
 }

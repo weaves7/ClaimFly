@@ -18,12 +18,20 @@ public class PlayerLeaveListener implements Listener {
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        Aviator aviator = playerTracker.getAviator(player);
 
-        if (playerTracker.flyingPlayersContains(player)) {
+        if(player.getAllowFlight() && player.isFlying()) {
+            aviator.setFlightActive(true);
+        }
+        else {
+            aviator.setFlightActive(false);
+        }
+
+        /*if (playerTracker.flyingPlayersContains(player)) {
 
             playerTracker.removeFlyingPlayer(player);//TODO remove this for persistence? Use a runnable to periodically prune the tracker instead?
 
-        }
+        }*/
     }
 
 }

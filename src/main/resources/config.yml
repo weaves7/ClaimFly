@@ -16,7 +16,6 @@ boundary:
 
 #Custom messages.
 message:
-
   #Player does not have the claimfly.use permission therefore they cant fly anywhere
   cannot-fly-on-server: "&cYou do not have permission to fly on this server!"
 

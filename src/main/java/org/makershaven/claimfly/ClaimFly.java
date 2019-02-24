@@ -9,15 +9,21 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class ClaimFly extends JavaPlugin {
 
+
     PlayerTracker playerTracker;
     PluginDescriptionFile pdfFile;
     BukkitTask checkFlyingPlayersTask;
     FileConfiguration config;
+    DataStore dataStore;
 
     @Override
     public void onEnable() {
 
+
         saveDefaultConfig();
+
+        dataStore = new YamlDataStore(this);
+
 
         playerTracker = new PlayerTracker(this);
         pdfFile = getDescription();
@@ -43,6 +49,13 @@ public class ClaimFly extends JavaPlugin {
 
     }
 
+    @Override
+    public void onDisable(){
+        dataStore.saveAllAviators(playerTracker.getFlyingPlayers());
+
+        dataStore.saveToDisk();
+
+    }
 
     void startCheckTask(Plugin plugin, long delay, long interval) {
         this.checkFlyingPlayersTask = new CheckFlyingPlayersTask(this).runTaskTimer(plugin, delay, interval);

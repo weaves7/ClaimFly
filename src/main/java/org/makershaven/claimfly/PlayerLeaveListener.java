@@ -8,12 +8,15 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerLeaveListener implements Listener {
 
     private PlayerTracker playerTracker;
+    ClaimFly plugin;
 
     PlayerLeaveListener(ClaimFly plugin) {
 
+        this.plugin = plugin;
         this.playerTracker = plugin.playerTracker;
 
     }
+
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
@@ -27,9 +30,12 @@ public class PlayerLeaveListener implements Listener {
             aviator.setFlightActive(false);
         }
 
+        plugin.dataStore.saveAviator(player.getUniqueId(),aviator);
+
+
         /*if (playerTracker.flyingPlayersContains(player)) {
 
-            playerTracker.removeFlyingPlayer(player);//TODO remove this for persistence? Use a runnable to periodically prune the tracker instead?
+            playerTracker.removeFlyingPlayer(player);
 
         }*/
     }

@@ -1,7 +1,6 @@
 package org.makershaven.claimfly;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
@@ -9,7 +8,7 @@ import java.util.*;
 class PlayerTracker {
     private Map<UUID, Aviator> flyingPlayers = new HashMap<>();
     private Set<Player> trackedPlayersSet = new HashSet<>();
-    private Plugin plugin;
+    private ClaimFly plugin;
 
 
     PlayerTracker(ClaimFly plugin) {
@@ -32,6 +31,10 @@ class PlayerTracker {
         return flyingPlayers.size();
     }
 
+    Map<UUID,Aviator> getFlyingPlayers(){
+        return  flyingPlayers;
+    }
+
     Set<Player> getTrackedPlayersSet(){
         trackedPlayersSet.clear();
         for(UUID uuid : flyingPlayers.keySet()){
@@ -44,18 +47,14 @@ class PlayerTracker {
     }
 
     void addFlyingPlayer(Player player) {
-        /*Aviator aviator;
-        TODO if(storage contains player){
-            aviator = aviator from storage;
-        }
-        else{
-            aviator = new Aviator(plugin);
-        }*/
-        flyingPlayers.put(player.getUniqueId(), new Aviator(plugin));
+        Aviator aviator = plugin.dataStore.loadAviator(player.getUniqueId());
+
+        flyingPlayers.put(player.getUniqueId(),aviator !=null ? aviator : new Aviator(plugin));
     }
 
     void removeFlyingPlayer(Player player) {
         flyingPlayers.remove(player.getUniqueId());
+
     }
 
 

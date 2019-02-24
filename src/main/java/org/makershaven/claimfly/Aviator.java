@@ -3,6 +3,8 @@ package org.makershaven.claimfly;
 import org.bukkit.plugin.Plugin;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 
 class Aviator implements Serializable {
@@ -16,6 +18,13 @@ class Aviator implements Serializable {
         this.boundaryDistance = plugin.getConfig().getInt("boundary.show-distance");
         this.flightToggleTimeStamp = System.currentTimeMillis();
         this.flightActive = false;
+    }
+
+    Aviator(Map<String,Object> map){
+        this.showBoundaries = (boolean) map.get("ShowBoundaries");
+        this.boundaryDistance = (int) map.get("BoundaryDistance");
+        this.flightToggleTimeStamp = (long) map.get("FlightToggleTimeStamp");
+        this.flightActive = (boolean) map.get("FlightActive");
     }
 
     boolean showBoundaries() {
@@ -50,4 +59,14 @@ class Aviator implements Serializable {
         this.flightActive = flightActive;
     }
 
+
+    Map<String, Object> serialize() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("ShowBoundaries",showBoundaries);
+        map.put("BoundaryDistance",boundaryDistance);
+        map.put("FlightToggleTimeStamp",flightToggleTimeStamp);
+        map.put("FlightActive",flightActive);
+
+        return map;
+    }
 }

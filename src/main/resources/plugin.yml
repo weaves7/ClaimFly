@@ -1,6 +1,6 @@
 main: org.makershaven.claimfly.ClaimFly
 api-version: "1.13"
-version: "1.2.1"
+version: "1.2.2"
 name: "ClaimFly"
 author: "Weaves"
 depend: [GriefPrevention, Vault]
@@ -28,9 +28,14 @@ permissions: #TODO Finish pulling perms from code.
   claimfly.command:
     description: Allows you to toggle flight with /claimfly
     default: false
-  claimfly.commands.boundary:
-    description: Allows you to change your boundary properties.
+  claimfly.commands.admin:
+    description: Allows you to do the admin commands.
     default: false
+  claimfly.commands.boundary.toggle:
+    description: Allows you to toggle the boundary on or off with /claimfly boundary.
+    default: false
+  claimfly.commands.boundary.set:
+    description: Allows you to set you boundary show distance with /claimfly boundary <number>.
   claimfly.claims.others:
     description: Allows you to fly in other peoples claims.
     default: false

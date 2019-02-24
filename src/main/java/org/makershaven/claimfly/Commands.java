@@ -80,7 +80,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                             player.sendMessage(ChatColor.RED + " You do not have permission to use this command.");
                             break;
                         }
-                    case "boundary": //TODO perhaps put the border stuff in own class as /flyboundary show <bool> and /border set <int>? border,boundary,edge... not sure what to call it.
+                    case "boundary":
                         if(args.length >= 2 && player.hasPermission("claimfly.commands.boundary.set")){
                             try {
                                 int newDistance = Integer.parseInt(args[1]);
@@ -144,7 +144,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) { //TODO Redo this section
+    public List<String> onTabComplete(CommandSender sender, Command command, String s, String[] args) {
         if (!(sender instanceof Player)) return null;
         Player player = (Player) sender;
         List<String> completions = new ArrayList<>();
@@ -154,7 +154,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 1) {
-            if (player.hasPermission("claimfly.commands.boundary")) {
+            if (player.hasPermission("claimfly.commands.boundary.toggle")) {
                 completions.add("boundary");
             }
 
@@ -162,9 +162,11 @@ public class Commands implements CommandExecutor, TabCompleter {
                 completions.add("checkinterval");
                 completions.add("reload");
                 completions.add("version");
-
             }
+        }
 
+        if (args.length == 2 && args[0].equals("boundary") && player.hasPermission("claimfly.commands.boundary.set")){
+            completions.add("10");
         }
         return completions;
     }

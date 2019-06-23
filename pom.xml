@@ -6,7 +6,7 @@
 
     <groupId>org.makershaven</groupId>
     <artifactId>ClaimFly</artifactId>
-    <version>1.2.2-SNAPSHOT</version>
+    <version>1.2.3-SNAPSHOT</version>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -40,6 +40,12 @@
             <artifactId>GriefPrevention</artifactId>
             <version>16.9</version>
         </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.25.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

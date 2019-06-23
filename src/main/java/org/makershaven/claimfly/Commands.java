@@ -21,7 +21,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) { //TODO Finalize what I want for perms.
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("claimfly") && sender instanceof Player) {
 
             Player player = (Player) sender;

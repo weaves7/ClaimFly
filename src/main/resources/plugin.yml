@@ -1,6 +1,6 @@
 main: org.makershaven.claimfly.ClaimFly
 api-version: "1.13"
-version: "1.2.2"
+version: "1.2.3"
 name: "ClaimFly"
 author: "Weaves"
 depend: [GriefPrevention, Vault]
@@ -11,7 +11,7 @@ commands:
     description: ClaimFly main command!
     permission: claimfly.command
     usage: /<command> args
-permissions: #TODO Finish pulling perms from code.
+permissions:
   claimfly.*:
     description: Allows all permissions.
     default: op

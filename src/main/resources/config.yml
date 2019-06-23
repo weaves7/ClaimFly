@@ -7,6 +7,9 @@ check-interval: 5
 #Minimum ticks between attempts to fly when not allowed to.
 flight-toggle-cooldown: 10
 
+#How you want the player data to be stored. (sqlite or yaml)
+storage: "sqlite"
+
 
 boundary:
   #Default distance to show edge of claim.

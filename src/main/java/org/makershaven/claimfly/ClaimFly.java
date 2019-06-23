@@ -16,18 +16,26 @@ public class ClaimFly extends JavaPlugin {
     FileConfiguration config;
     DataStore dataStore;
 
+
     @Override
     public void onEnable() {
 
 
         saveDefaultConfig();
+        config = getConfig();
+        pdfFile = getDescription();
 
-        dataStore = new YamlDataStore(this);
+        if (config.getString("storage").equalsIgnoreCase("sqlite")) {
+            dataStore = new SQLiteDataStore(this);
+        }
+        else if (config.getString("storage").equalsIgnoreCase("yaml")) {
+            dataStore = new YamlDataStore(this);
+        }
 
 
         playerTracker = new PlayerTracker(this);
-        pdfFile = getDescription();
-        config = getConfig();
+
+
 
 
         // Start the checking task on the flying players
@@ -50,7 +58,7 @@ public class ClaimFly extends JavaPlugin {
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
         dataStore.saveAllAviators(playerTracker.getFlyingPlayers());
 
         dataStore.saveToDisk();

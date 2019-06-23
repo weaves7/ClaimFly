@@ -63,7 +63,7 @@ public class SQLiteDataStore implements DataStore {
         try{
             PreparedStatement stmt = con.prepareStatement("SELECT AVIATOR FROM AVIATORS WHERE UUID='"+ uuid.toString() + "';");
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()){//TODO finish creating an Aviator to return. This is the root of most problems.
+            while (rs.next()){
                 aviator = new Aviator(rs.getString("AVIATOR"));
             }
 

@@ -32,12 +32,11 @@ public class PlayerLeaveListener implements Listener {
 
         plugin.dataStore.saveAviator(player.getUniqueId(),aviator);
 
-
-        /*if (playerTracker.flyingPlayersContains(player)) {
+        if (playerTracker.flyingPlayersContains(player)) {
 
             playerTracker.removeFlyingPlayer(player);
 
-        }*/
+        }
     }
 
 }

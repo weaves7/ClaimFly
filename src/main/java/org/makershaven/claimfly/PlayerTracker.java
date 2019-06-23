@@ -45,7 +45,6 @@ class PlayerTracker {
         }
        return  trackedPlayersSet;
     }
-
     void addFlyingPlayer(Player player) {
         Aviator aviator = plugin.dataStore.loadAviator(player.getUniqueId());
 

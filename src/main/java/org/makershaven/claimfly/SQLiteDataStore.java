@@ -58,19 +58,24 @@ public class SQLiteDataStore implements DataStore {
     @Override
     public Aviator loadAviator(UUID uuid) {
 
+
+        Aviator aviator = null;
         try{
-            PreparedStatement stmt = con.prepareStatement("SELECT UUID FROM AVIATORS WHERE UUID='"+ uuid.toString() + "';");
+            PreparedStatement stmt = con.prepareStatement("SELECT AVIATOR FROM AVIATORS WHERE UUID='"+ uuid.toString() + "';");
             ResultSet rs = stmt.executeQuery();
+            while (rs.next()){//TODO finish creating an Aviator to return. This is the root of most problems.
+                aviator = new Aviator(rs.getString("AVIATOR"));
+            }
+
         } catch (SQLException e) {
         e.printStackTrace();
     }
-        return null;
+        return aviator;
     }
 
     @Override
     public void saveToDisk() {
         plugin.getLogger().info("SQLite database saved.");
-        //Does not seem to be needed for SQLite.
     }
 
     private Connection getSQLConnection() {

@@ -1,5 +1,6 @@
 package org.makershaven.claimfly;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,9 +22,7 @@ public class PlayerJoinListener implements Listener {
         if (!playerTracker.flyingPlayersContains(player)) {
             playerTracker.addFlyingPlayer(player);
         }
-
         if (playerTracker.getAviator(player).isFlightActive()) {
-
             player.setAllowFlight(true);
             player.setFlying(true);
         }

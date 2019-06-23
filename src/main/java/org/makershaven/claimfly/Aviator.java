@@ -20,6 +20,20 @@ class Aviator implements Serializable {
         this.flightActive = false;
     }
 
+
+    Aviator (String stringMap){
+        String[] pairs = stringMap.replaceAll("\\{", "").replaceAll("}","").split(",");
+        Map<String,String> map = new HashMap<>();
+        for (String pair : pairs){
+           String[] keyValue = pair.split("=");
+           map.put(keyValue[0].trim(),keyValue[1].trim());
+        }
+        this.showBoundaries = Boolean.parseBoolean(map.get("ShowBoundaries"));
+        this.boundaryDistance = Integer.parseInt(map.get("BoundaryDistance"));
+        this.flightToggleTimeStamp = Long.parseLong(map.get("FlightToggleTimeStamp"));
+        this.flightActive = Boolean.parseBoolean(map.get("FlightActive"));
+    }
+
     Aviator(Map<String,Object> map){
         this.showBoundaries = (boolean) map.get("ShowBoundaries");
         this.boundaryDistance = (int) map.get("BoundaryDistance");

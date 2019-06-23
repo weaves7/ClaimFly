@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 
-//Java Database Connectivity theory by telusko
+
 public class SQLiteDataStore implements DataStore {
 
     private Connection con;
@@ -27,7 +27,6 @@ public class SQLiteDataStore implements DataStore {
         try {
             PreparedStatement preStatement = con.prepareStatement("SELECT UUID FROM AVIATORS WHERE EXISTS " +
                     "(SELECT UUID FROM AVIATORS WHERE UUID='"+uuid.toString()+"');");
-            System.out.println("you are here");
             ResultSet resultSet = preStatement.executeQuery();
 
             if(resultSet.next()){
@@ -35,17 +34,14 @@ public class SQLiteDataStore implements DataStore {
                         "' WHERE UUID='"+uuid.toString()+"';");
                 updateStatement.executeUpdate();
                 updateStatement.close();
-                System.out.println("made it to here");
             }else {
                 PreparedStatement addStatement = con.prepareStatement("INSERT INTO AVIATORS VALUES (?,?);");
                 addStatement.setString(1, uuid.toString());
                 addStatement.setString(2, aviator.serialize().toString());
                 addStatement.executeUpdate();
                 addStatement.close();
-                System.out.println("we got to here");
             }
             preStatement.close();
-            System.out.println("cant go further");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,12 +61,6 @@ public class SQLiteDataStore implements DataStore {
         try{
             PreparedStatement stmt = con.prepareStatement("SELECT UUID FROM AVIATORS WHERE UUID='"+ uuid.toString() + "';");
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
-                System.out.println("rs next is " + rs.next());
-            }else {
-                System.out.println("rs next is false");
-            }
-
         } catch (SQLException e) {
         e.printStackTrace();
     }
@@ -79,7 +69,8 @@ public class SQLiteDataStore implements DataStore {
 
     @Override
     public void saveToDisk() {
-
+        plugin.getLogger().info("SQLite database saved.");
+        //Does not seem to be needed for SQLite.
     }
 
     private Connection getSQLConnection() {
@@ -111,7 +102,7 @@ public class SQLiteDataStore implements DataStore {
     private void createTables(){
         try {
             Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE AVIATORS " +
+            String sql = "CREATE TABLE IF NOT EXISTS AVIATORS " +
                     "(UUID TEXT PRIMARY KEY   NOT NULL,"+
                     "AVIATOR            TEXT  NOT NULL)";
             stmt.executeUpdate(sql);

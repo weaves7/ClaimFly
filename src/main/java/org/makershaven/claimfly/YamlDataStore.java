@@ -13,14 +13,14 @@ public class YamlDataStore implements DataStore {
     private File file;
     private YamlConfiguration dataFile;
 
-    YamlDataStore(ClaimFly plugin){
-        file = new File(plugin.getDataFolder(),"data.yml");
+    YamlDataStore(ClaimFly plugin) {
+        file = new File(plugin.getDataFolder(), "data.yml");
         loadDataFile();
         createFile();
     }
 
     private void createFile() {
-        if(!file.exists()){
+        if (!file.exists()) {
             try {
                 dataFile.save(file);
             } catch (IOException e) {
@@ -39,11 +39,10 @@ public class YamlDataStore implements DataStore {
 
     @Override
     public void saveAviator(UUID uuid, Aviator aviator) {
-        if(!dataFile.getKeys(false).contains(uuid.toString())){
+        if (!dataFile.getKeys(false).contains(uuid.toString())) {
             dataFile.createSection(uuid.toString());
         }
-        dataFile.set(uuid.toString(),aviator.serialize());
-
+        dataFile.set(uuid.toString(), aviator.serialize());
 
 
     }
@@ -51,19 +50,18 @@ public class YamlDataStore implements DataStore {
     @Override
     public void saveAllAviators(Map<UUID, Aviator> map) {
 
-        for(UUID uuid:map.keySet()){
-            saveAviator(uuid,map.get(uuid));
+        for (UUID uuid : map.keySet()) {
+            saveAviator(uuid, map.get(uuid));
         }
     }
-
 
 
     @Override
     public Aviator loadAviator(UUID uuid) {
         Aviator aviator;
 
-        if(dataFile.getConfigurationSection(uuid.toString()) != null){
-            Map<String,Object> map =  dataFile.getConfigurationSection(uuid.toString()).getValues(false);
+        if (dataFile.getConfigurationSection(uuid.toString()) != null) {
+            Map<String, Object> map = dataFile.getConfigurationSection(uuid.toString()).getValues(false);
 
             return new Aviator(map);
         }
@@ -71,7 +69,7 @@ public class YamlDataStore implements DataStore {
     }
 
     @Override
-    public void saveToDisk(){
+    public void saveToDisk() {
         try {
             dataFile.save(file);
         } catch (IOException e) {

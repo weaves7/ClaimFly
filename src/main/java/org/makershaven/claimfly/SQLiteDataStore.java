@@ -15,7 +15,7 @@ public class SQLiteDataStore implements DataStore {
     ClaimFly plugin;
 
 
-    SQLiteDataStore(ClaimFly plugin){
+    SQLiteDataStore(ClaimFly plugin) {
         this.plugin = plugin;
         con = getSQLConnection();
         createTables();
@@ -26,15 +26,16 @@ public class SQLiteDataStore implements DataStore {
     public void saveAviator(UUID uuid, Aviator aviator) {
         try {
             PreparedStatement preStatement = con.prepareStatement("SELECT UUID FROM AVIATORS WHERE EXISTS " +
-                    "(SELECT UUID FROM AVIATORS WHERE UUID='"+uuid.toString()+"');");
+                    "(SELECT UUID FROM AVIATORS WHERE UUID='" + uuid.toString() + "');");
             ResultSet resultSet = preStatement.executeQuery();
 
-            if(resultSet.next()){
-                PreparedStatement updateStatement = con.prepareStatement("UPDATE AVIATORS SET AVIATOR='"+aviator.serialize().toString()+
-                        "' WHERE UUID='"+uuid.toString()+"';");
+            if (resultSet.next()) {
+                PreparedStatement updateStatement = con.prepareStatement("UPDATE AVIATORS SET AVIATOR='" + aviator.serialize().toString() +
+                        "' WHERE UUID='" + uuid.toString() + "';");
                 updateStatement.executeUpdate();
                 updateStatement.close();
-            }else {
+            }
+            else {
                 PreparedStatement addStatement = con.prepareStatement("INSERT INTO AVIATORS VALUES (?,?);");
                 addStatement.setString(1, uuid.toString());
                 addStatement.setString(2, aviator.serialize().toString());
@@ -50,8 +51,8 @@ public class SQLiteDataStore implements DataStore {
 
     @Override
     public void saveAllAviators(Map<UUID, Aviator> uuidAviatorMap) {
-        for(UUID uuid: uuidAviatorMap.keySet()){
-            saveAviator(uuid,uuidAviatorMap.get(uuid));
+        for (UUID uuid : uuidAviatorMap.keySet()) {
+            saveAviator(uuid, uuidAviatorMap.get(uuid));
         }
     }
 
@@ -60,16 +61,16 @@ public class SQLiteDataStore implements DataStore {
 
 
         Aviator aviator = null;
-        try{
-            PreparedStatement stmt = con.prepareStatement("SELECT AVIATOR FROM AVIATORS WHERE UUID='"+ uuid.toString() + "';");
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT AVIATOR FROM AVIATORS WHERE UUID='" + uuid.toString() + "';");
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 aviator = new Aviator(rs.getString("AVIATOR"));
             }
 
         } catch (SQLException e) {
-        e.printStackTrace();
-    }
+            e.printStackTrace();
+        }
         return aviator;
     }
 
@@ -80,35 +81,35 @@ public class SQLiteDataStore implements DataStore {
 
     private Connection getSQLConnection() {
         String dbname = "data";
-        File dataFolder = new File(plugin.getDataFolder(), dbname +".db");
-        if (!dataFolder.exists()){
+        File dataFolder = new File(plugin.getDataFolder(), dbname + ".db");
+        if (!dataFolder.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 dataFolder.createNewFile();
             } catch (IOException e) {
-                plugin.getLogger().log(Level.SEVERE, "File write error: "+ dbname +".db");
+                plugin.getLogger().log(Level.SEVERE, "File write error: " + dbname + ".db");
             }
         }
         try {
-            if(con!=null&&!con.isClosed()){
+            if (con != null && !con.isClosed()) {
                 return con;
             }
             Class.forName("org.sqlite.JDBC");
             con = DriverManager.getConnection("jdbc:sqlite:" + dataFolder);
             return con;
         } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE,"SQLite exception on initialize", ex);
+            plugin.getLogger().log(Level.SEVERE, "SQLite exception on initialize", ex);
         } catch (ClassNotFoundException ex) {
             plugin.getLogger().log(Level.SEVERE, "You need the SQLite JDBC library. Google it. Put it in /lib folder.");
         }
         return null;
     }
 
-    private void createTables(){
+    private void createTables() {
         try {
             Statement stmt = con.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS AVIATORS " +
-                    "(UUID TEXT PRIMARY KEY   NOT NULL,"+
+                    "(UUID TEXT PRIMARY KEY   NOT NULL," +
                     "AVIATOR            TEXT  NOT NULL)";
             stmt.executeUpdate(sql);
             stmt.close();
@@ -117,7 +118,6 @@ public class SQLiteDataStore implements DataStore {
         }
 
     }
-
 
 
 }

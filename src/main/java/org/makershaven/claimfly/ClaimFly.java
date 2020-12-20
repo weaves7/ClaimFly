@@ -57,7 +57,7 @@ public class ClaimFly extends JavaPlugin {
         for (Player player : getServer().getOnlinePlayers()) {
             playerTracker.addFlyingPlayer(player);
         }
-        if (config.getBoolean("enable=-metrics")) {
+        if (config.getBoolean("enable-metrics")) {
             int B_STATS_ID = 9670;
             Metrics metrics = new Metrics(this, B_STATS_ID);
             this.getLogger().log(Level.INFO, "Thank you for enabling metrics!");

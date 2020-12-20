@@ -1,5 +1,6 @@
 package org.makershaven.claimfly;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -7,14 +8,16 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
-public class ClaimFly extends JavaPlugin {
+import java.util.logging.Level;
 
+public class ClaimFly extends JavaPlugin {
 
     PlayerTracker playerTracker;
     PluginDescriptionFile pdfFile;
     BukkitTask checkFlyingPlayersTask;
     FileConfiguration config;
     DataStore dataStore;
+
 
 
     @Override
@@ -53,6 +56,11 @@ public class ClaimFly extends JavaPlugin {
         for players that join before plugin loads*/
         for (Player player : getServer().getOnlinePlayers()) {
             playerTracker.addFlyingPlayer(player);
+        }
+        if (config.getBoolean("enable=-metrics")) {
+            int B_STATS_ID = 9670;
+            Metrics metrics = new Metrics(this, B_STATS_ID);
+            this.getLogger().log(Level.INFO, "Thank you for enabling metrics!");
         }
 
     }

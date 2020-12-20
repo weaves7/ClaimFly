@@ -10,6 +10,8 @@ flight-toggle-cooldown: 10
 #How you want the player data to be stored. (sqlite or yaml)
 storage: "sqlite"
 
+#Do you want to enable metrics
+enable-metrics: true
 
 boundary:
   #Default distance to show edge of claim.

@@ -21,7 +21,7 @@ public class SQLiteDataStore implements DataStore {
         createTables();
     }
 
-
+//Todo get rid of concat, and change from if else to insert if not exist or whatever the proper thing is needed here.
     @Override
     public void saveAviator(UUID uuid, Aviator aviator) {
         try {

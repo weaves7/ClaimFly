@@ -1,6 +1,7 @@
 package org.makershaven.claimfly;
 
 import me.ryanhamshire.GriefPrevention.Claim;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -13,6 +14,8 @@ class FlightBoundary {
     private Claims claims;
     private Location playerLoc;
     private ClaimFly plugin;
+    private Particle particle = Particle.REDSTONE;
+    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(255, 0, 0), 10.0F);
 
     FlightBoundary(ClaimFly plugin){
         this.claims = new Claims();
@@ -38,8 +41,8 @@ class FlightBoundary {
 
             for(int i =0; i <= 3;i++){
                 if(playerLoc.distance(locs[i]) <= checkDistance){
-                    player.spawnParticle(Particle.BARRIER,locs[i],1);
-                    player.spawnParticle(Particle.BARRIER,locs[i].subtract(0,1,0),1);
+                    player.spawnParticle(particle,locs[i],1,dustOptions);
+                    player.spawnParticle(particle,locs[i].subtract(0,1,0),1,dustOptions);
                 }
             }
 
